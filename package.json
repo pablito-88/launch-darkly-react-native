@@ -9,7 +9,8 @@
   "keywords": [
     "react-native",
     "feature flag",
-    "feature toggle"
+    "feature toggle",
+    "launch darkly"
   ],
   "author": "Infinitix <contact@infinitix.io>",
   "license": "MIT",
