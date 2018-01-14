@@ -13,7 +13,9 @@
 @protocol ClientDelegate <NSObject>
 @optional
 -(void)userDidUpdate;
+-(void)userUnchanged;
 -(void)featureFlagDidUpdate:(NSString *)key;
+-(void)serverConnectionUnavailable;
 @end
 
 @interface LDClient : NSObject
@@ -27,11 +29,19 @@
 /**
  * Start the client with a valid configuration and user.
  *
- * @param inputConfigBuilder    Desired configuration for the client
- * @param inputUserBuilder  Desired user for the client
- * @return whether the client was able to be started
+ * @param inputConfigBuilder Desired configuration for the client.
+ * @param inputUserBuilder  Desired user for the client.
+ * @return whether the client was able to be started.
  */
-- (BOOL)start:(LDConfigBuilder *)inputConfigBuilder userBuilder:(LDUserBuilder *)inputUserBuilder;
+- (BOOL)start:(LDConfigBuilder *)inputConfigBuilder userBuilder:(LDUserBuilder *)inputUserBuilder __deprecated_msg("Use start:withUserBuilder: instead");
+/**
+ * Start the client with a valid configuration and user.
+ *
+ * @param inputConfig Desired configuration for the client.
+ * @param inputUserBuilder  Desired user for the client.
+ * @return whether the client was able to be started.
+ */
+- (BOOL)start:(LDConfig *)inputConfig withUserBuilder:(LDUserBuilder *)inputUserBuilder;
 /**
  * Retrieve a feature flag value. If the configuration for this feature
  * flag is retrieved from the server that value is returned, otherwise
@@ -52,6 +62,16 @@
  * @return the feature flag value
  */
 - (NSNumber*)numberVariation:(NSString *)featureKey fallback:(NSNumber*)fallback;
+/**
+ * Retrieve a feature flag value. If the configuration for this feature
+ * flag is retrieved from the server that value is returned, otherwise
+ * the fallback is returned.
+ *
+ * @param featureKey   Key of feature flag
+ * @param fallback   Fallback value for feature flag
+ * @return the feature flag value
+ */
+- (double)doubleVariation:(NSString *)featureKey fallback:(double)fallback;
 /**
  * Retrieve a feature flag value. If the configuration for this feature
  * flag is retrieved from the server that value is returned, otherwise

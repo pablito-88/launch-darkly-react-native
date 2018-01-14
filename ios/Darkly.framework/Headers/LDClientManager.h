@@ -17,11 +17,11 @@
 @interface LDClientManager : NSObject  <RequestManagerDelegate, NSApplicationDelegate> {
 }
 #else
-@interface LDClientManager : NSObject  <RequestManagerDelegate, UIApplicationDelegate> {
+@interface LDClientManager : NSObject  <RequestManagerDelegate> {
 }
 #endif
 
-@property (nonatomic) BOOL offlineEnabled;
+@property (nonatomic, assign, getter=isOnline) BOOL online;
 
 +(LDClientManager *)sharedInstance;
 

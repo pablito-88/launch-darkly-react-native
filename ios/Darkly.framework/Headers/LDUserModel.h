@@ -14,6 +14,7 @@
 @property (nullable, nonatomic, strong, setter=key:) NSString *key;
 @property (nullable, nonatomic, strong) NSString *ip;
 @property (nullable, nonatomic, strong) NSString *country;
+@property (nullable, nonatomic, strong) NSString *name;
 @property (nullable, nonatomic, strong) NSString *firstName;
 @property (nullable, nonatomic, strong) NSString *lastName;
 @property (nullable, nonatomic, strong) NSString *email;
@@ -29,6 +30,7 @@
 -(nonnull id)initWithDictionary:(nonnull NSDictionary *)dictionary;
 -(nonnull NSString *) convertToJson;
 -(nonnull NSDictionary *)dictionaryValue;
+-(nonnull NSDictionary *)dictionaryValueWithConfig:(BOOL)withConfig;
 
 -(NSObject * __nonnull) flagValue: ( NSString * __nonnull )keyName;
 -(BOOL) doesFlagExist: (nonnull NSString *)keyName;

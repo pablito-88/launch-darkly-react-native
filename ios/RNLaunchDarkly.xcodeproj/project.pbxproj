@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		784B7C7C200BE52300DDF2C8 /* Pods_Darkly_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 784B7C7A200BE52200DDF2C8 /* Pods_Darkly_iOS.framework */; };
+		784B7C7D200BE52300DDF2C8 /* DarklyEventSource.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 784B7C7B200BE52200DDF2C8 /* DarklyEventSource.framework */; };
 		B3E7B58A1CC2AC0600A0062D /* RNLaunchDarkly.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RNLaunchDarkly.m */; };
 		D6A2B3E91EC8F9DC00E74EBF /* Darkly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6A2B3E81EC8F9DC00E74EBF /* Darkly.framework */; };
 /* End PBXBuildFile section */
@@ -25,6 +27,8 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRNLaunchDarkly.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNLaunchDarkly.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		784B7C7A200BE52200DDF2C8 /* Pods_Darkly_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Pods_Darkly_iOS.framework; sourceTree = "<group>"; };
+		784B7C7B200BE52200DDF2C8 /* DarklyEventSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DarklyEventSource.framework; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* RNLaunchDarkly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNLaunchDarkly.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RNLaunchDarkly.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNLaunchDarkly.m; sourceTree = "<group>"; };
 		D6A2B3E81EC8F9DC00E74EBF /* Darkly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Darkly.framework; sourceTree = "<group>"; };
@@ -36,6 +40,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D6A2B3E91EC8F9DC00E74EBF /* Darkly.framework in Frameworks */,
+				784B7C7C200BE52300DDF2C8 /* Pods_Darkly_iOS.framework in Frameworks */,
+				784B7C7D200BE52300DDF2C8 /* DarklyEventSource.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,6 +59,8 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
+				784B7C7B200BE52200DDF2C8 /* DarklyEventSource.framework */,
+				784B7C7A200BE52200DDF2C8 /* Pods_Darkly_iOS.framework */,
 				D6A2B3E81EC8F9DC00E74EBF /* Darkly.framework */,
 				B3E7B5881CC2AC0600A0062D /* RNLaunchDarkly.h */,
 				B3E7B5891CC2AC0600A0062D /* RNLaunchDarkly.m */,
@@ -203,6 +211,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../../../ios/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -223,6 +232,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/../../../ios/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

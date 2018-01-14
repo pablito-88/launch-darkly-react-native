@@ -11,22 +11,25 @@ React Native wrapper over LaunchDarkly SDK's for iOS and Android.
 
 ## Getting started
 
-`$ npm install react-native-launch-darkly --save`
+`$ npm install launch-darkly-react-native --save`
 
 or
 
-``$ yarn add react-native-launch-darkly --save``
+``$ yarn add launch-darkly-react-native --save``
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-launch-darkly`
+`$ react-native link launch-darkly-react-native`
 
 #### iOS:
 
-1) In XCode in project navigator right click on application name => Add files to... => navigate to node_modules/react-native-launch-darkly/ios and select Darkly.framework.
-2) Go to you project target and add Darkly.framework to Embedded Binaries
+1) In XCode in project navigator, develop RNLaunchDarkly.xcodeproj.
+2) Drag and drop DarklyEventSource.framework, Pods_Darkly_iOS.framework and Darkly.framework to the Frameworks folder of your project.
+3) Go to you project target and add DarklyEventSource.framework, Pods_Darkly_iOS.framework and Darkly.framework to Embedded Binaries
 
 #### Android:
+
+/!\ The Android project has not been updated from the original fork and has not been tested yet!
 
 Add line bellow at the bottom of your app/build.gradle
   ```
@@ -39,11 +42,16 @@ Add line bellow at the bottom of your app/build.gradle
 #### iOS
 
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-2. Go to `node_modules` ➜ `react-native-launch-darkly` and add `RNLaunchDarkly.xcodeproj`
+2. Go to `node_modules` ➜ `launch-darkly-react-native` and add `RNLaunchDarkly.xcodeproj`
 3. In XCode, in the project navigator, select your project. Add `libRNLaunchDarkly.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
-4. Run your project (`Cmd+R`)<
+4. In XCode in project navigator, develop RNLaunchDarkly.xcodeproj.
+5. Drag and drop DarklyEventSource.framework, Pods_Darkly_iOS.framework and Darkly.framework to the Frameworks folder of your project.
+6. Go to you project target and add DarklyEventSource.framework, Pods_Darkly_iOS.framework and Darkly.framework to Embedded Binaries
+7. Run your project (`Cmd+R`)<
 
 #### Android
+
+/!\ The Android project has not been updated from the original fork and has not been tested yet!
 
 1. Open up `android/app/src/main/java/[...]/MainActivity.java`
   - Add `import com.reactlibrary.RNLaunchDarklyPackage;` to the imports at the top of the file
@@ -65,30 +73,26 @@ Add line bellow at the bottom of your app/build.gradle
 
 ## Usage
 ```javascript
-import LaunchDarkly from 'react-native-launch-darkly';
+import LaunchDarkly from 'launch-darkly-react-native';
 
-type User = {
-  key: string,
-  email?: string,
-  firstName?: string,
-  lastName?: string,
-  isAnonymous?: bool
+const user = {
+  key: 'key',
+  email: 'email@example.com', // optional
+  firstName: 'firstname', // optional
+  lastName: 'lastname', // optional
+  isAnonymous: false, // optional
 };
 
 // init native SDK with api key and user object
-LaunchDarkly.configure(apiKey: string, user: User);
+LaunchDarkly.configure('apiKey', user);
 
 // get boolean feature flag value
-LaunchDarkly.boolVariation(featureFlagName: string, callback: function): bool
+LaunchDarkly.boolVariation('featureFlagName', (showFeature) => {
+  console.log('Show feature:', showFeature);
+});
 
 // get string feature flag value
-LaunchDarkly.stringVariation(featureFlagName: string, fallback: string, callback: function): string
-
-// adds listener which is called every time given feature flag value is changed
-// callback is called with flagName string, so you will have to call LaunchDarkly.boolVariation()
-// to get new feature flag value
-LaunchDarkly.addFeatureFlagChangeListener(flagName: string, callback: function): void
-
-// removes all onFeatureFlagChange listeners
-LaunchDarkly.unsubscribe(): void
+LaunchDarkly.stringVariation('featureFlagName', 'fallback', (value) => {
+  console.log('String value:', value);
+});
 ```

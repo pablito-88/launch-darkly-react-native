@@ -2,8 +2,7 @@
 //  Copyright © 2015 Catamorphic Co. All rights reserved.
 //
 
-
-#import "LDFlagConfigModel.h"
+#import "LDUserModel.h"
 
 @protocol RequestManagerDelegate <NSObject>
 
@@ -12,10 +11,9 @@
 
 @end
 
-@interface LDRequestManager : NSObject {
-    
-}
+@interface LDRequestManager : NSObject
 
+extern NSString * const kHeaderMobileKey;
 @property (nonatomic) NSString* mobileKey;
 @property (nonatomic) NSString* baseUrl;
 @property (nonatomic) NSString* eventsUrl;
@@ -24,7 +22,7 @@
 
 +(LDRequestManager *)sharedInstance;
 
--(void)performFeatureFlagRequest:(NSString *)encodedUser;
+-(void)performFeatureFlagRequest:(LDUserModel *)user;
 
 -(void)performEventRequest:(NSArray *)jsonEventArray;
 
