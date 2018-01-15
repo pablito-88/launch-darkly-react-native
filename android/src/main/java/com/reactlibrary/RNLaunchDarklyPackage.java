@@ -16,7 +16,6 @@ public class RNLaunchDarklyPackage implements ReactPackage {
       return Arrays.<NativeModule>asList(new RNLaunchDarklyModule(reactContext));
     }
 
-    @Override
     public List<Class<? extends JavaScriptModule>> createJSModules() {
       return Collections.emptyList();
     }
