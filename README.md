@@ -58,12 +58,12 @@ Add line bellow at the bottom of your app/build.gradle
   - Add `new RNLaunchDarklyPackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
   	```
-  	include ':react-native-launch-darkly'
-  	project(':react-native-launch-darkly').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-launch-darkly/android')
+  	include ':launch-darkly-react-native'
+  	project(':launch-darkly-react-native').projectDir = new File(rootProject.projectDir, 	'../node_modules/launch-darkly-react-native/android')
   	```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
   	```
-      compile project(':react-native-launch-darkly')
+      compile project(':launch-darkly-react-native')
   	```
 4. Add line bellow at the bottom of your app/build.gradle
     ```
@@ -95,4 +95,14 @@ LaunchDarkly.boolVariation('featureFlagName', (showFeature) => {
 LaunchDarkly.stringVariation('featureFlagName', 'fallback', (value) => {
   console.log('String value:', value);
 });
+
+// adds listener which is called every time given feature flag value is changed
+// callback is called with flagName string, so you will have to call LaunchDarkly.boolVariation()
+// to get new feature flag value
+LaunchDarkly.addFeatureFlagChangeListener('flagName', () => {
+  console.log('callback');
+});
+
+// removes all onFeatureFlagChange listeners
+LaunchDarkly.unsubscribe();
 ```
