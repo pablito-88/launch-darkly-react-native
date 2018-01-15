@@ -1,5 +1,5 @@
 
-# react-native-launch-darkly
+# launch-darkly-react-native
 
 React Native wrapper over LaunchDarkly SDK's for iOS and Android.
 
