@@ -1,6 +1,6 @@
 
 #import "RNLaunchDarkly.h"
-#import <Darkly/DarklyConstants.h>
+#import "DarklyConstants.h"
 
 @implementation RNLaunchDarkly
 

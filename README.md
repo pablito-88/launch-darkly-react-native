@@ -23,9 +23,14 @@ or
 
 #### iOS:
 
-1) In XCode in project navigator, develop RNLaunchDarkly.xcodeproj.
-2) Drag and drop DarklyEventSource.framework, Pods_Darkly_iOS.framework and Darkly.framework to the Frameworks folder of your project.
-3) Go to you project target and add DarklyEventSource.framework, Pods_Darkly_iOS.framework and Darkly.framework to Embedded Binaries
+Add the following line to your podfile:
+```
+pod 'LaunchDarkly'
+```
+and run
+```
+pod install
+```
 
 #### Android:
 
@@ -44,10 +49,6 @@ Add line bellow at the bottom of your app/build.gradle
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
 2. Go to `node_modules` ➜ `launch-darkly-react-native` and add `RNLaunchDarkly.xcodeproj`
 3. In XCode, in the project navigator, select your project. Add `libRNLaunchDarkly.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
-4. In XCode in project navigator, develop RNLaunchDarkly.xcodeproj.
-5. Drag and drop DarklyEventSource.framework, Pods_Darkly_iOS.framework and Darkly.framework to the Frameworks folder of your project.
-6. Go to you project target and add DarklyEventSource.framework, Pods_Darkly_iOS.framework and Darkly.framework to Embedded Binaries
-7. Run your project (`Cmd+R`)<
 
 #### Android
 
