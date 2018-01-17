@@ -26,10 +26,9 @@ NSLog(string); \
 }
 
 #define DEBUG_LOG(format, ...) \
+if ([LDUtil logLevel] >= DarklyLogLevelDebug) { \
 NSLog(format, __VA_ARGS__); \
-//if ([LDUtil logLevel] >= DarklyLogLevelDebug) { \
-//NSLog(format, __VA_ARGS__); \
-//}
+}
 
 #define PRIVATE_LOGX(string) \
 if (DEBUG) { \
