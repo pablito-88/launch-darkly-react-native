@@ -2,7 +2,6 @@
 //  Copyright © 2015 Catamorphic Co. All rights reserved.
 //
 
-
 #import "LDConfig.h"
 #import "LDUserBuilder.h"
 #import "LDUtil.h"
@@ -153,4 +152,3 @@
 - (BOOL)stopClient;
 
 @end
-

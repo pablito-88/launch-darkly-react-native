@@ -4,7 +4,11 @@
 
 #import "LDClient.h"
 #import "DarklyConstants.h"
+#if TARGET_OS_OSX
+#import <AppKit/AppKit.h>
+#else
 #import <UIKit/UIKit.h>
+#endif
 
 #define CRITICAL_LOGX(string) \
 if ([LDUtil logLevel] >= DarklyLogLevelCriticalOnly) { \
