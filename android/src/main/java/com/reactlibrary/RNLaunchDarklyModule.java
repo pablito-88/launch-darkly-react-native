@@ -105,8 +105,14 @@ public class RNLaunchDarklyModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void boolVariation(String flagName, Callback callback) {
-    Boolean variationResult = ldClient.boolVariation(flagName, false);
+  public void boolVariation(String flagName, Boolean fallback, Callback callback) {
+    Boolean variationResult = false;
+
+    if(ldClient != null)
+    {
+      variationResult = ldClient.boolVariation(flagName, fallback);
+    }
+
     callback.invoke(variationResult);
   }
 
