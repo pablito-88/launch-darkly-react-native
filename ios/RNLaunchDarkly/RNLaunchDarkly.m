@@ -61,7 +61,7 @@ RCT_EXPORT_METHOD(configure:(NSString*)apiKey options:(NSDictionary*)options) {
     [[LDClient sharedInstance] start:config userBuilder:user];
 }
 
-RCT_EXPORT_METHOD(boolVariation:(NSString*)flagName callback:(RCTResponseSenderBlock)callback) {
+RCT_EXPORT_METHOD(boolVariation:(NSString*)flagName fallback:(BOOL)fallback callback:(RCTResponseSenderBlock)callback) {
     BOOL showFeature = [[LDClient sharedInstance] boolVariation:flagName fallback:NO];
     callback(@[[NSNumber numberWithBool:showFeature]]);
 }
