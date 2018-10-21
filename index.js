@@ -16,8 +16,8 @@ class LaunchDarkly {
     RNLaunchDarkly.configure(apiKey, options);
   }
 
-  boolVariation (featureName, callback) {
-    RNLaunchDarkly.boolVariation(featureName, callback);
+  boolVariation (featureName, fallback, callback) {
+    RNLaunchDarkly.boolVariation(featureName, fallback, callback);
   }
 
   stringVariation (featureName, fallback, callback) {
