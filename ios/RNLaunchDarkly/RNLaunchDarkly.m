@@ -9,7 +9,13 @@
     return @[@"FeatureFlagChanged"];
 }
 
-RCT_EXPORT_METHOD(configure:(NSString*)apiKey options:(NSDictionary*)options) {
+RCT_EXPORT_METHOD(configure
+                  :(NSString *)apiKey
+                  options:(NSDictionary *)options
+                  resolver:(RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject
+                 )
+{
     NSLog(@"configure with %@", options);
 
     NSString* key           = options[@"key"];
@@ -17,40 +23,40 @@ RCT_EXPORT_METHOD(configure:(NSString*)apiKey options:(NSDictionary*)options) {
     NSString* lastName      = options[@"lastName"];
     NSString* email         = options[@"email"];
     NSNumber* isAnonymous   = options[@"isAnonymous"];
-    NSString* organization   = options[@"organization"];
+    NSString* organization  = options[@"organization"];
 
-    LDConfigBuilder *config = [[LDConfigBuilder alloc] init];
-    [config withMobileKey:apiKey];
+    LDConfig *config = [[LDConfig alloc] initWithMobileKey:apiKey];
 
-    LDUserBuilder *user = [[LDUserBuilder alloc] init];
-    user = [user withKey:key];
+    LDUserBuilder *builder = [[LDUserBuilder alloc] init];
+    builder.key = key;
 
     if (firstName) {
-        user = [user withFirstName:firstName];
+        builder.firstName = firstName;
     }
 
     if (lastName) {
-        user = [user withLastName:lastName];
+        builder.lastName = lastName;
     }
 
     if (email) {
-        user = [user withEmail:email];
+        builder.email = email;
     }
 
     if (organization) {
-        user = [user withCustomString:@"organization" value:organization];
+        builder.customDictionary[@"organization"] = organization;
     }
 
     if([isAnonymous isEqualToNumber:[NSNumber numberWithBool:YES]]) {
-        user = [user withAnonymous:TRUE];
+        builder.isAnonymous = TRUE;
     }
 
     if ( self.user ) {
-        [[LDClient sharedInstance] updateUser:user];
+        [[LDClient sharedInstance] updateUser:builder];
+        resolve(@"true");
         return;
     }
 
-    self.user = [user build];
+    self.user = [builder build];
 
     [[NSNotificationCenter defaultCenter]
      addObserver:self
@@ -58,11 +64,12 @@ RCT_EXPORT_METHOD(configure:(NSString*)apiKey options:(NSDictionary*)options) {
      name:kLDFlagConfigChangedNotification
      object:nil];
 
-    [[LDClient sharedInstance] start:config userBuilder:user];
+    [[LDClient sharedInstance] start:config withUserBuilder:builder];
+    resolve(@"true");
 }
 
 RCT_EXPORT_METHOD(boolVariation:(NSString*)flagName fallback:(BOOL)fallback callback:(RCTResponseSenderBlock)callback) {
-    BOOL showFeature = [[LDClient sharedInstance] boolVariation:flagName fallback:NO];
+    BOOL showFeature = [[LDClient sharedInstance] boolVariation:flagName fallback:fallback];
     callback(@[[NSNumber numberWithBool:showFeature]]);
 }
 
