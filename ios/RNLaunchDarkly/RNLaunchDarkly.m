@@ -50,22 +50,50 @@ RCT_EXPORT_METHOD(configure
         builder.isAnonymous = TRUE;
     }
 
-    if ( self.user ) {
-        [[LDClient sharedInstance] updateUser:builder];
-        resolve(@"true");
+
+    @try {
+        if ( self.user ) {
+            [[LDClient sharedInstance] updateUser:builder];
+            resolve(@"true");
+            return;
+        } else {
+          self.user = [builder build];
+
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(handleFeatureFlagChange:)
+         name:kLDFlagConfigChangedNotification
+         object:nil];
+        }
+    }
+    @catch (NSException * exception) {
+        NSMutableDictionary * info = [NSMutableDictionary dictionary];
+        [info setValue:exception.name forKey:@"ExceptionName"];
+        [info setValue:exception.reason forKey:@"ExceptionReason"];
+        [info setValue:exception.callStackReturnAddresses forKey:@"ExceptionCallStackReturnAddresses"];
+        [info setValue:exception.callStackSymbols forKey:@"ExceptionCallStackSymbols"];
+        [info setValue:exception.userInfo forKey:@"ExceptionUserInfo"];
+
+        NSError *error = [[NSError alloc] initWithDomain:@"LaunchDakrly" code:500 userInfo:info];
+        reject(@"Configure error", @"Couldnt configure Launch Darkly", error);
         return;
     }
 
-    self.user = [builder build];
+    @try {
+        [[LDClient sharedInstance] start:config withUserBuilder:builder];
+        resolve(@"true");
+    }
+    @catch (NSException * exception) {
+        NSMutableDictionary * info = [NSMutableDictionary dictionary];
+        [info setValue:exception.name forKey:@"ExceptionName"];
+        [info setValue:exception.reason forKey:@"ExceptionReason"];
+        [info setValue:exception.callStackReturnAddresses forKey:@"ExceptionCallStackReturnAddresses"];
+        [info setValue:exception.callStackSymbols forKey:@"ExceptionCallStackSymbols"];
+        [info setValue:exception.userInfo forKey:@"ExceptionUserInfo"];
 
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(handleFeatureFlagChange:)
-     name:kLDFlagConfigChangedNotification
-     object:nil];
-
-    [[LDClient sharedInstance] start:config withUserBuilder:builder];
-    resolve(@"true");
+        NSError *error = [[NSError alloc] initWithDomain:@"LaunchDakrly" code:500 userInfo:info];
+        reject(@"Configure error", @"Couldnt configure Launch Darkly", error);
+    }
 }
 
 RCT_EXPORT_METHOD(boolVariation:(NSString*)flagName fallback:(BOOL)fallback callback:(RCTResponseSenderBlock)callback) {
@@ -87,4 +115,3 @@ RCT_EXPORT_METHOD(stringVariation:(NSString*)flagName fallback:(NSString*)fallba
 RCT_EXPORT_MODULE()
 
 @end
-
