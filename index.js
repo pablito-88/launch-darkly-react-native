@@ -12,8 +12,8 @@ class LaunchDarkly {
     this.listeners = {};
   }
 
-  configure (apiKey, options) {
-    RNLaunchDarkly.configure(apiKey, options);
+  async configure (apiKey, options) {
+    await RNLaunchDarkly.configure(apiKey, options);
   }
 
   cleanUserData () {
