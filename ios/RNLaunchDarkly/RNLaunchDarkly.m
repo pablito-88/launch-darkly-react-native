@@ -9,6 +9,10 @@
     return @[@"FeatureFlagChanged"];
 }
 
+RCT_EXPORT_METHOD(cleanUserData) {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"ldUserModelDictionary"];
+}
+
 RCT_EXPORT_METHOD(configure
                   :(NSString *)apiKey
                   options:(NSDictionary *)options

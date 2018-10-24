@@ -83,6 +83,11 @@ public class RNLaunchDarklyModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void cleanUserData() {
+
+  }
+
+  @ReactMethod
   public void addFeatureFlagChangeListener (String flagName) {
     FeatureFlagChangeListener listener = new FeatureFlagChangeListener() {
       @Override

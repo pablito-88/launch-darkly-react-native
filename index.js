@@ -16,6 +16,10 @@ class LaunchDarkly {
     RNLaunchDarkly.configure(apiKey, options);
   }
 
+  cleanUserData () {
+    RNLaunchDarkly.cleanUserData();
+  }
+
   boolVariation (featureName, fallback, callback) {
     RNLaunchDarkly.boolVariation(featureName, fallback, callback);
   }
