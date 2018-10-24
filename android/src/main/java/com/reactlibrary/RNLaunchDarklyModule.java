@@ -2,9 +2,11 @@
 package com.reactlibrary;
 
 import android.app.Application;
+import android.app.Activity;
 import android.util.Log;
 
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -19,6 +21,7 @@ import com.launchdarkly.android.LDUser;
 import com.launchdarkly.android.LaunchDarklyException;
 
 import java.util.Collections;
+import java.util.concurrent.Future;
 
 public class RNLaunchDarklyModule extends ReactContextBaseJavaModule {
 
@@ -69,6 +72,22 @@ public class RNLaunchDarklyModule extends ReactContextBaseJavaModule {
     } else {
       initLdClient(ldConfig);
     }
+  }
+
+  private void initLdClient(LDConfig ldConfig) throws Exception {
+    Activity activity = getCurrentActivity();
+    if (activity == null) {
+      throw new Exception("Couldn't init RNLaunchDarklyModule cause activity was null");
+    }
+
+    Application application = activity.getApplication();
+
+    if (application == null) {
+      throw new Exception("Couldn't init RNLaunchDarklyModule cause application was null");
+    }
+
+    Future<LDClient> future = LDClient.init(application, ldConfig, user);
+    ldClient = future.get();
   }
 
   @ReactMethod
