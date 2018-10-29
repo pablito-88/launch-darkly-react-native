@@ -28,10 +28,11 @@ RCT_EXPORT_METHOD(configure
     NSString* email         = options[@"email"];
     NSNumber* isAnonymous   = options[@"isAnonymous"];
     NSString* organization  = options[@"organization"];
-
+    NSArray* nonCustomFields  = @[@"key", @"firstName", @"lastName", @"email", @"isAnonymous"];
+    
     LDConfig *config = [[LDConfig alloc] initWithMobileKey:apiKey];
-
     LDUserBuilder *builder = [[LDUserBuilder alloc] init];
+    
     builder.key = key;
 
     if (firstName) {
@@ -52,6 +53,13 @@ RCT_EXPORT_METHOD(configure
 
     if([isAnonymous isEqualToNumber:[NSNumber numberWithBool:YES]]) {
         builder.isAnonymous = TRUE;
+    }
+    
+    for (NSString* key in options) {
+        if (![nonCustomFields containsObject:key]) {
+            NSLog(@"LaunchDarkly Custom Field key=%@", key);
+            builder = [builder withCustomString:key value:options[key]];
+        }
     }
 
 
