@@ -13,12 +13,15 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.launchdarkly.android.FeatureFlagChangeListener;
 import com.launchdarkly.android.LDClient;
 import com.launchdarkly.android.LDConfig;
 import com.launchdarkly.android.LDUser;
 import com.launchdarkly.android.LaunchDarklyException;
+import com.google.common.collect.Sets;
+import java.util.HashSet;
 
 import java.util.Collections;
 import java.util.concurrent.Future;
@@ -40,6 +43,8 @@ public class RNLaunchDarklyModule extends ReactContextBaseJavaModule {
   }
 
   private void configure(String apiKey, ReadableMap options) throws Exception {
+    HashSet<String> nonCustomFields = Sets.newHashSet("key", "email", "firstName", "lastName", "isAnonymous");
+    ReadableMapKeySetIterator iterator = options.keySetIterator();
     LDConfig ldConfig = new LDConfig.Builder()
             .setMobileKey(apiKey)
             .build();
@@ -64,6 +69,14 @@ public class RNLaunchDarklyModule extends ReactContextBaseJavaModule {
 
     if (options.hasKey("organization")) {
       userBuilder = userBuilder.custom("organization", options.getString("organization"));
+    }
+
+    while (iterator.hasNextKey()) {
+      String key = iterator.nextKey();
+      if (!nonCustomFields.contains(key)) {
+        userBuilder = userBuilder.custom(key, options.getString(key));
+        Log.d("RNLaunchDarklyModule", "Launch Darkly custom field: " + key);
+      }
     }
 
     user = userBuilder.build();
